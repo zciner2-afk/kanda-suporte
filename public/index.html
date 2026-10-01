@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kanda Freelancer — Painel Admin</title>
+<link rel="stylesheet" href="/style.css">
+
+<style>
+
+:root {
+  --bg: #0f1420;
+  --panel: #171d2b;
+  --panel-2: #1f2738;
+  --border: #2a3348;
+  --text: #e7ebf3;
+  --muted: #93a0b8;
+  --accent: #3fd18c;
+  --accent-dark: #29a86e;
+  --danger: #ef5b5b;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.hidden { display: none !important; }
+
+.screen { min-height: 100vh; }
+
+/* LOGIN */
+#login-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-card h1 { margin: 0; font-size: 22px; }
+.subtitle { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+
+.login-card label { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+.login-card input,
+textarea,
+input[type="text"] {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 10px 12px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.login-card button[type="submit"] {
+  margin-top: 16px;
+  background: var(--accent);
+  color: #06231a;
+  border: none;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.error-msg { color: var(--danger); font-size: 13px; min-height: 16px; margin: 4px 0 0; }
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.brand { font-weight: 700; font-size: 16px; }
+.brand span { color: var(--accent); font-weight: 500; }
+
+.ghost-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.ghost-btn:hover { border-color: var(--accent); }
+
+.primary-btn {
+  background: var(--accent);
+  color: #06231a;
+  border: none;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.primary-btn:hover { background: var(--accent-dark); }
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 6px;
+  padding: 12px 20px 0;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding: 10px 14px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.tab.active {
+  color: var(--text);
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-bottom: none;
+}
+
+.content { padding: 20px; max-width: 900px; margin: 0 auto; }
+
+.pane { display: none; }
+.pane.active { display: block; }
+
+.pane-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+h2 { font-size: 18px; margin: 0 0 8px; }
+.hint { color: var(--muted); font-size: 13px; }
+
+/* STATS */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.stat-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.stat-card .value { font-size: 26px; font-weight: 700; color: var(--accent); }
+.stat-card .label { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+/* LISTS / CARDS */
+.list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card .card-title { font-weight: 600; }
+.card .card-sub { color: var(--muted); font-size: 13px; }
+.card textarea { min-height: 70px; resize: vertical; }
+
+.row-actions { display: flex; gap: 8px; }
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.badge.ok { color: var(--accent); border-color: var(--accent); }
+.badge.warn { color: #f0b429; border-color: #f0b429; }
+
+.small-btn {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.small-btn:hover { border-color: var(--accent); }
+.small-btn.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+.ad-time-input { max-width: 100px; }
+
+.save-ads { margin-top: 16px; }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 50;
+}
+.toast.error { border-color: var(--danger); color: var(--danger); }
+.toast.success { border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 600px) {
+  .content { padding: 14px; }
+}
+
+</style>
+
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="login-screen" class="screen">
+    <form id="login-form" class="login-card">
+      <h1>🤖 Kanda Freelancer</h1>
+      <p class="subtitle">Painel Administrativo</p>
+      <label>Utilizador</label>
+      <input type="text" id="login-user" autocomplete="username" required>
+      <label>Palavra-passe</label>
+      <input type="password" id="login-pass" autocomplete="current-password" required>
+      <button type="submit">Entrar</button>
+      <p id="login-error" class="error-msg"></p>
+    </form>
+  </div>
+
+  <!-- APP -->
+  <div id="app-screen" class="screen hidden">
+    <header class="topbar">
+      <div class="brand">🤖 Kanda Freelancer <span>Admin</span></div>
+      <button id="logout-btn" class="ghost-btn">Sair</button>
+    </header>
+
+    <nav class="tabs">
+      <button data-tab="dashboard" class="tab active">📊 Dashboard</button>
+      <button data-tab="jobs" class="tab">💼 Trabalhos</button>
+      <button data-tab="messages" class="tab">💬 Mensagens</button>
+      <button data-tab="ads" class="tab">📢 Anúncios</button>
+      <button data-tab="broadcast" class="tab">📤 Broadcast</button>
+      <button data-tab="banned" class="tab">⛔ Banidos</button>
+    </nav>
+
+    <main class="content">
+
+      <!-- DASHBOARD -->
+      <section id="tab-dashboard" class="pane active">
+        <div class="stat-grid" id="stat-grid"></div>
+      </section>
+
+      <!-- JOBS -->
+      <section id="tab-jobs" class="pane">
+        <div class="pane-header">
+          <h2>Trabalhos</h2>
+          <button id="new-job-btn" class="primary-btn">+ Novo Trabalho</button>
+        </div>
+        <div id="job-form-wrap" class="card hidden">
+          <input type="text" id="job-title" placeholder="Título do trabalho">
+          <input type="text" id="job-value" placeholder="Valor (ex: 500)">
+          <textarea id="job-description" placeholder="Descrição"></textarea>
+          <div class="row-actions">
+            <button id="save-job-btn" class="primary-btn">Guardar</button>
+            <button id="cancel-job-btn" class="ghost-btn">Cancelar</button>
+          </div>
+        </div>
+        <div id="jobs-list" class="list"></div>
+      </section>
+
+      <!-- MESSAGES -->
+      <section id="tab-messages" class="pane">
+        <h2>Mensagens Privadas</h2>
+        <div id="messages-list" class="list"></div>
+      </section>
+
+      <!-- ADS -->
+      <section id="tab-ads" class="pane">
+        <div class="pane-header">
+          <h2>Anúncios Agendados</h2>
+          <button id="new-ad-btn" class="primary-btn">+ Novo Anúncio</button>
+        </div>
+        <p class="hint">Alterações aqui reagendam o bot automaticamente — sem reiniciar nada.</p>
+        <div id="ads-list" class="list"></div>
+        <button id="save-ads-btn" class="primary-btn save-ads">Guardar Alterações</button>
+      </section>
+
+      <!-- BROADCAST -->
+      <section id="tab-broadcast" class="pane">
+        <h2>Enviar Anúncio Agora</h2>
+        <p class="hint">Envia imediatamente para todos os grupos e utilizadores ativos. Suporta Markdown.</p>
+        <textarea id="broadcast-text" rows="8" placeholder="Escreva a mensagem..."></textarea>
+        <button id="broadcast-btn" class="primary-btn">Enviar Agora</button>
+        <p id="broadcast-result" class="hint"></p>
+      </section>
+
+      <!-- BANNED -->
+      <section id="tab-banned" class="pane">
+        <h2>Usuários Banidos</h2>
+        <div id="banned-list" class="list"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
