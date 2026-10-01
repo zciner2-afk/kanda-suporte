@@ -1,0 +1,43 @@
+{
+  "name": "kanda-freelancer-bot",
+  "version": "2.1.0",
+  "description": "Bot Telegram assistente para plataforma Kanda Freelancer com painel administrativo, controle de links e sistema de anúncios",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "nodemon bot.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "freelancer",
+    "kanda",
+    "link-protection",
+    "admin-panel",
+    "announcements"
+  ],
+  "author": "Kanda Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "firebase-admin": "^12.1.0",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "node-schedule": "^2.1.1",
+    "node-telegram-bot-api": "^0.66.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
